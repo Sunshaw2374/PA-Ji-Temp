@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PA Ji</title>
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <style>
+    :root {
+      --bg-color: #FAF6EE;
+      --card-bg: #FDFBF6;
+      --text-main: #2A2620;
+      --text-secondary: #7A7265;
+      --text-muted: #9A9182;
+      --border-color: #F0E9D8;
+      --accent-color: #2A2620;
+      --accent-hover: #7A7265;
+      --banner-bg: #FDFBF6;
+      --war-room: #C8A84B;
+      --document-analysis: #1E4FA1;
+      --draft-generator: #A85C32;
+      --study-companion: #6E2A34;
+      --internship-opportunities: #3E5C3A;
+      --gold-glow: #E8C978;
+      --navy-glow: #6E9BEB;
+      --rust-glow: #E8925A;
+      --oxblood-glow: #D97E8F;
+      --olive-green-glow: #8FA878;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      min-height: 100vh;
+      width: 100vw;
+      overflow-x: hidden;
+    }
+
+    /* Sidebar */
+    aside {
+      width: 240px;
+      min-width: 240px;
+      border-right: 1px solid var(--border-color);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--bg-color);
+      flex-shrink: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 32px;
+    }
+
+    .brand-icon {
+      width: 48px;
+      height: 48px;
+      display: block;
+      object-fit: contain;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 6px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .nav-icon {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.7;
+    }
+
+    .nav-item.active, .nav-item:hover {
+      background-color: var(--border-color);
+      color: var(--text-main);
+    }
+
+    /* Sidebar Footer & User Profile Component */
+    .sidebar-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 4px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 16px;
+    }
+
+    .avatar-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: #2A2620;
+      color: #FAF6EE;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .user-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-role {
+      font-size: 12px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Main Area - Full Width Expansion */
+    main {
+      flex: 1;
+      padding: 32px 48px;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    /* Header & Search */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+      width: 100%;
+    }
+
+    .search-bar {
+      position: relative;
+      width: 420px;
+      max-width: 50%;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 10px 14px 10px 38px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: var(--card-bg);
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* Top Right Actions & Sidebar Button Styling */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-header-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background-color: var(--card-bg);
+      color: var(--text-main);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.25s ease;
+    }
+
+    .nav-header-btn:hover {
+      background-color: var(--border-color);
+      border-color: var(--text-muted);
+      transform: translateY(-1px);
+    }
+
+    .nav-header-btn img {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+    }
+
+    .sidebar-footer .nav-header-btn {
+      width: 100%;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background-color: var(--banner-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 36px 40px;
+      margin-bottom: 32px;
+      width: 100%;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .hero-banner h1 {
+      font-family: Georgia, serif;
+      font-size: 32px;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+
+    .hero-banner p {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 650px;
+      line-height: 1.5;
+    }
+
+    /* Fluid Responsive Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+      width: 100%;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Clean Card Icon Container */
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .card-icon img,
+    .card-icon svg {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .card h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .card:nth-child(1) {
+      --tool-color: #9C8233;
+      --tool-glow: var(--war-room);
+    }
+
+    .card:nth-child(2) {
+      --tool-color: #173B7A;
+      --tool-glow: var(--document-analysis);
+    }
+
+    .card:nth-child(3) {
+      --tool-color: #521F27;
+      --tool-glow: var(--study-companion);
+    }
+
+    .card:nth-child(4) {
+      --tool-color: #2E452B;
+      --tool-glow: var(--internship-opportunities);
+    }
+
+    .card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.45;
+    }
+
+    /* Animated Action Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--tool-color, var(--accent-color));
+      color: #ffffff;
+      border: none;
+      padding: 11px 18px;
+      border-radius: 6px;
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      width: 100%;
+      opacity: 0.88;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .btn:hover {
+      opacity: 1;
+      background-color: var(--tool-glow, var(--accent-hover));
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Disabled "Coming Soon" Button state - Maintains card color, shows banned sign */
+    .btn.btn-disabled {
+      cursor: not-allowed;
+      pointer-events: auto;
+    }
+
+    .btn.btn-disabled:hover {
+      transform: none;
+      box-shadow: none;
+      opacity: 0.88;
+      background-color: var(--tool-color);
+    }
+
+    /* Table Section */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      width: 100%;
+    }
+
+    .section-header h2 {
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .section-header a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .section-header a:hover {
+      color: var(--text-main);
+    }
+
+    .table-container {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 32px;
+      width: 100%;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    tr {
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    tr:last-child {
+      border-bottom: none;
+    }
+
+    td {
+      padding: 16px 24px;
+    }
+
+    .status-tag {
+      font-size: 12px;
+      color: var(--text-muted);
+      background: var(--bg-color);
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside>
+    <div>
+      <div class="brand">
+        <img class="brand-icon" src="logo.svg" alt="PA Ji logo">
+        <span>PA Ji</span>
+      </div>
+      <ul class="nav-list">
+        <li><a href="#" class="nav-item active">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V10Z"/><path d="M9 21v-6h6v6"/></svg>
+          <span>Home</span>
+        </a></li>
+        <li><a href="#" class="nav-item">
+          <img src="war-room.svg" class="nav-icon" alt="War Room Icon">
+          <span>War Room</span>
+        </a></li>
+        <li><a href="#" class="nav-item">
+          <img src="legal-news.svg" class="nav-icon" alt="Legal News Icon">
+          <span>Legal News</span>
+        </a></li>
+        <li><a href="#" class="nav-item">
+          <img src="study-buddy.svg" class="nav-icon" alt="Study Buddy Icon">
+          <span>Study Buddy</span>
+        </a></li>
+        <li><a href="#" class="nav-item">
+          <img src="Internship.svg" class="nav-icon" alt="Internship Icon">
+          <span>Internship Aggregator</span>
+        </a></li>
+      </ul>
+    </div>
+
+    <!-- Sidebar Footer with Alex Sterling Profile & Log Out Button -->
+    <div class="sidebar-footer">
+      <div class="user-profile">
+        <div class="avatar-circle">AS</div>
+        <div class="user-info">
+          <span class="user-name">Alex Sterling</span>
+          <span class="user-role">Senior Associate</span>
+        </div>
+      </div>
+      <a href="#" class="nav-header-btn">
+        <span>⏻</span>
+        <span>Log out</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Header -->
+    <header>
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" placeholder="Search across documents, cases, and strategy...">
+      </div>
+      
+      <!-- Top Right Actions: About Us & Contact Us -->
+      <div class="header-actions">
+        <a href="#about" class="nav-header-btn">
+          <img src="about us.svg" alt="About Us Icon">
+          <span>About Us</span>
+        </a>
+        <a href="mailto:support@paji.ai" class="nav-header-btn">
+          <img src="feedback.svg" alt="Feedback icon">
+          <span>Contact Us</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+      <span class="badge">✦ Intelligence Hub</span>
+      <h1>Welcome to your Legal Command Center</h1>
+      <p>Prepare arguments, analyze complex documentation, and draft with surgical precision using our specialized legal AI suites.</p>
+    </section>
+
+    <!-- Feature Cards Grid -->
+    <section class="grid">
+      <!-- 1. War Room -->
+      <div class="card">
+        <div>
+          <div class="card-icon">
+            <img src="war-room.svg" alt="War Room Logo">
+          </div>
+          <h3>War Room</h3>
+          <p>Submit your legal arguments and be able to simulate opposing counsel to find potential weaknesses.</p>
+        </div>
+        <a href="#" class="btn">Enter War Room</a>
+      </div>
+
+      <!-- 2. Daily Legal News -->
+      <div class="card">
+        <div>
+          <div class="card-icon">
+            <img src="legal-news.svg" alt="Daily Legal News Logo">
+          </div>
+          <h3>Legal News</h3>
+          <p>Stay up to date with the latest legal updates, landmark judgments, and key case law analysis.</p>
+        </div>
+        <a href="javascript:void(0)" class="btn btn-disabled">Coming Soon</a>
+      </div>
+
+      <!-- 3. Study Buddy -->
+      <div class="card">
+        <div>
+          <div class="card-icon">
+            <img src="study-buddy.svg" alt="Study Buddy Logo">
+          </div>
+          <h3>Study Buddy</h3>
+          <p>Convert complex cases into summaries, flashcards, and quizzes for intensive prep.</p>
+        </div>
+        <a href="javascript:void(0)" class="btn btn-disabled">Coming Soon</a>
+      </div>
+
+      <!-- 4. Internship Aggregator -->
+      <div class="card">
+        <div>
+          <div class="card-icon">
+            <img src="Internship.svg" alt="Internship Aggregator Logo">
+          </div>
+          <h3>Internship Aggregator</h3>
+          <p>Discover top tier legal internships, clerkships, and research opportunities.</p>
+        </div>
+        <a href="javascript:void(0)" class="btn btn-disabled">Coming Soon</a>
+      </div>
+    </section>
+
+    <!-- Recent Case Work Table -->
+    <section>
+      <div class="section-header">
+        <h2>Recent Case Work</h2>
+        <a href="#">View Case Archive &gt;</a>
+      </div>
+      <div class="table-container">
+        <table>
+          <tbody>
+            <tr>
+              <td><strong>Verma vs. State Registry</strong><br><span style="font-size: 12px; color: var(--text-muted);">Land Dispute</span></td>
+              <td style="text-align: right;"><span class="status-tag">Analysis Complete</span></td>
+            </tr>
+            <tr>
+              <td><strong>Shareholder Agreement - TechCorp</strong><br><span style="font-size: 12px; color: var(--text-muted);">Corporate Law</span></td>
+              <td style="text-align: right;"><span class="status-tag">Drafting v2</span></td>
+            </tr>
+            <tr>
+              <td><strong>M.K. Gandhi vs. Municipal Corp</strong><br><span style="font-size: 12px; color: var(--text-muted);">Constitutional Law</span></td>
+              <td style="text-align: right;"><span class="status-tag">In Review</span></td>
+            </tr>
+            <tr>
+              <td><strong>IP Infringement - BlueLeaf LLC</strong><br><span style="font-size: 12px; color: var(--text-muted);">Intellectual Property</span></td>
+              <td style="text-align: right;"><span class="status-tag">Strategy Pending</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>

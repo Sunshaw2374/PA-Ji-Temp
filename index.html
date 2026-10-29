@@ -60,15 +60,16 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       font-weight: 700;
-      font-size: 16px;
+      font-size: 18px;
       margin-bottom: 32px;
     }
 
+    /* Increased logo size */
     .brand-icon {
-      width: 48px;
-      height: 48px;
+      width: 64px;
+      height: 64px;
       display: block;
       object-fit: contain;
     }
@@ -170,41 +171,16 @@
       max-width: 100%;
     }
 
-    /* Header & Search */
+    /* Header without search bar */
     header {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
       margin-bottom: 28px;
       width: 100%;
     }
 
-    .search-bar {
-      position: relative;
-      width: 420px;
-      max-width: 50%;
-    }
-
-    .search-bar input {
-      width: 100%;
-      padding: 10px 14px 10px 38px;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      background: var(--card-bg);
-      font-size: 14px;
-      outline: none;
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-muted);
-      font-size: 14px;
-    }
-
-    /* Top Right Actions & Sidebar Button Styling */
+    /* Top Right Actions */
     .header-actions {
       display: flex;
       align-items: center;
@@ -297,7 +273,6 @@
       justify-content: space-between;
     }
 
-    /* Clean Card Icon Container */
     .card-icon {
       width: 48px;
       height: 48px;
@@ -347,7 +322,6 @@
       line-height: 1.45;
     }
 
-    /* Animated Action Buttons */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -374,12 +348,6 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
     }
 
-    .btn:active {
-      transform: translateY(0);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-    }
-
-    /* Disabled "Coming Soon" Button state - Maintains card color, shows banned sign */
     .btn.btn-disabled {
       cursor: not-allowed;
       pointer-events: auto;
@@ -488,7 +456,7 @@
       </ul>
     </div>
 
-    <!-- Sidebar Footer with Alex Sterling Profile & Log Out Button -->
+    <!-- Sidebar Footer -->
     <div class="sidebar-footer">
       <div class="user-profile">
         <div class="avatar-circle">AS</div>
@@ -506,14 +474,8 @@
 
   <!-- Main Content -->
   <main>
-    <!-- Header -->
+    <!-- Header (Search Bar Removed) -->
     <header>
-      <div class="search-bar">
-        <span class="search-icon">🔍</span>
-        <input type="text" placeholder="Search across documents, cases, and strategy...">
-      </div>
-      
-      <!-- Top Right Actions: About Us & Contact Us -->
       <div class="header-actions">
         <a href="#about" class="nav-header-btn">
           <img src="about us.svg" alt="About Us Icon">
@@ -584,30 +546,30 @@
       </div>
     </section>
 
-    <!-- Recent Case Work Table -->
+    <!-- Recent War Room Case Searches -->
     <section>
       <div class="section-header">
-        <h2>Recent Case Work</h2>
-        <a href="#">View Case Archive &gt;</a>
+        <h2>Recent War Room Case Searches</h2>
+        <a href="#">View All Strategy Simulations &gt;</a>
       </div>
       <div class="table-container">
         <table>
           <tbody>
             <tr>
-              <td><strong>Verma vs. State Registry</strong><br><span style="font-size: 12px; color: var(--text-muted);">Land Dispute</span></td>
-              <td style="text-align: right;"><span class="status-tag">Analysis Complete</span></td>
+              <td><strong>Sharma vs. Municipal Corp of Delhi</strong><br><span style="font-size: 12px; color: var(--text-muted);">Civil Law · 2h ago</span></td>
+              <td style="text-align: right;"><span class="status-tag">Simulation Complete</span></td>
             </tr>
             <tr>
-              <td><strong>Shareholder Agreement - TechCorp</strong><br><span style="font-size: 12px; color: var(--text-muted);">Corporate Law</span></td>
-              <td style="text-align: right;"><span class="status-tag">Drafting v2</span></td>
+              <td><strong>Intellectual Property Dispute - SaaS Contract</strong><br><span style="font-size: 12px; color: var(--text-muted);">Commercial · Yesterday</span></td>
+              <td style="text-align: right;"><span class="status-tag">Argument Scored</span></td>
             </tr>
             <tr>
-              <td><strong>M.K. Gandhi vs. Municipal Corp</strong><br><span style="font-size: 12px; color: var(--text-muted);">Constitutional Law</span></td>
-              <td style="text-align: right;"><span class="status-tag">In Review</span></td>
+              <td><strong>Bail Application - Section 438 CrPC</strong><br><span style="font-size: 12px; color: var(--text-muted);">Criminal Procedure · Oct 22</span></td>
+              <td style="text-align: right;"><span class="status-tag">Rebuttal Analyzed</span></td>
             </tr>
             <tr>
-              <td><strong>IP Infringement - BlueLeaf LLC</strong><br><span style="font-size: 12px; color: var(--text-muted);">Intellectual Property</span></td>
-              <td style="text-align: right;"><span class="status-tag">Strategy Pending</span></td>
+              <td><strong>Shareholder Oppression & Mismanagement</strong><br><span style="font-size: 12px; color: var(--text-muted);">Insolvency & Bankruptcy · Oct 18</span></td>
+              <td style="text-align: right;"><span class="status-tag">Simulation Complete</span></td>
             </tr>
           </tbody>
         </table>

@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>War Room · PA Ji</title>
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  
+  <style>
+    /* ==========================================================================
+       1. COLOR SYSTEM (PA JI BRAND PALETTE)
+       ========================================================================== */
+    :root {
+      /* Base Surfaces */
+      --bg-color: #FAF6EE;          /* Warm parchment canvas */
+      --card-bg: #FDFBF6;           /* Card surface */
+      --border-color: #F0E9D8;      /* Border line */
+
+      /* Text */
+      --text-main: #2A2620;         /* Primary text */
+      --text-secondary: #7A7265;    /* Secondary text */
+      --text-muted: #9A9182;        /* Muted text */
+
+      /* Tool Accent & Glows */
+      --war-room: #C8A84B;          /* War Room Gold Accent */
+      --war-room-hover: #B5953A;
+      --gold-glow: #E8C978;
+
+      /* Input dark area */
+      --input-dark: #0F172A;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      min-height: 100vh;
+      width: 100vw;
+      overflow-x: hidden;
+    }
+
+    /* ==========================================================================
+       2. SIDEBAR NAVIGATION (Matching Home Page)
+       ========================================================================== */
+    aside {
+      width: 240px;
+      min-width: 240px;
+      border-right: 1px solid var(--border-color);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--bg-color);
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      flex-shrink: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 32px;
+    }
+
+    /* Same 64px logo as Home page */
+    .brand-icon {
+      width: 64px;
+      height: 64px;
+      display: block;
+      object-fit: contain;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 6px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .nav-icon {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.7;
+      object-fit: contain;
+    }
+
+    .nav-item.active, .nav-item:hover {
+      background-color: var(--border-color);
+      color: var(--text-main);
+    }
+
+    /* Sidebar Footer & User Profile Component */
+    .sidebar-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 4px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 16px;
+    }
+
+    .avatar-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: #2A2620;
+      color: #FAF6EE;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .user-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-role {
+      font-size: 12px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-header-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background-color: var(--card-bg);
+      color: var(--text-main);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.25s ease;
+    }
+
+    .nav-header-btn:hover {
+      background-color: var(--border-color);
+      border-color: var(--text-muted);
+      transform: translateY(-1px);
+    }
+
+    .sidebar-footer .nav-header-btn {
+      width: 100%;
+    }
+
+    /* ==========================================================================
+       3. MAIN WORKSPACE & TOP RIGHT INFO BUTTON
+       ========================================================================== */
+    main {
+      flex: 1;
+      padding: 32px 48px;
+      width: 100%;
+      max-width: 100%;
+      position: relative;
+    }
+
+    .top-right-anchor {
+      position: absolute;
+      top: 32px;
+      right: 48px;
+      z-index: 10;
+    }
+
+    .info-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .info-btn:hover {
+      background: var(--war-room);
+      color: #FFFFFF;
+      border-color: var(--war-room);
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 36px 40px;
+      margin-top: 24px;
+      margin-bottom: 32px;
+      width: 100%;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--war-room);
+      margin-bottom: 8px;
+    }
+
+    .hero-banner h1 {
+      font-family: Georgia, serif;
+      font-size: 32px;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+
+    .hero-banner p {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 650px;
+      line-height: 1.5;
+    }
+
+    /* Workspace Grid */
+    .grid-workspace {
+      display: grid;
+      grid-template-columns: 2.2fr 1fr;
+      gap: 32px;
+      width: 100%;
+    }
+
+    /* Tabs & Form */
+    .tab-container {
+      display: flex;
+      gap: 24px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 24px;
+    }
+
+    .tab-button {
+      background: none;
+      border: none;
+      padding-bottom: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .tab-button.active {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .tab-button.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--war-room);
+    }
+
+    .form-field-label {
+      font-weight: 600;
+      font-size: 14px;
+      margin-top: 20px;
+      color: var(--text-main);
+    }
+
+    .form-field-hint {
+      font-style: italic;
+      color: var(--text-secondary);
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .required-asterisk {
+      color: var(--war-room);
+    }
+
+    .radio-option-group {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 10px;
+      font-size: 13.5px;
+    }
+
+    .radio-option-group label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    textarea.dark-input {
+      width: 100%;
+      background: var(--input-dark);
+      color: #E7EAF0;
+      border: none;
+      border-radius: 6px;
+      padding: 14px;
+      font-family: inherit;
+      font-size: 14px;
+      resize: vertical;
+      line-height: 1.45;
+    }
+
+    textarea.dark-input::placeholder {
+      color: #6B7487;
+    }
+
+    textarea.dark-input:focus {
+      outline: 2px solid var(--war-room);
+    }
+
+    .file-dropzone {
+      border: 1.5px dashed var(--border-color);
+      background: var(--card-bg);
+      border-radius: 6px;
+      padding: 32px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .file-dropzone:hover {
+      background: #F5EFE3;
+    }
+
+    .select-dropdown {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: var(--card-bg);
+      margin-bottom: 16px;
+      color: var(--text-main);
+      font-size: 14px;
+    }
+
+    .form-disclaimer {
+      font-style: italic;
+      color: var(--text-muted);
+      font-size: 12px;
+      margin: 24px 0 20px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 16px;
+    }
+
+    .btn-primary {
+      background: var(--war-room);
+      color: #FFFFFF;
+      border: none;
+      width: 100%;
+      height: 44px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(200, 168, 75, 0.25);
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--war-room-hover);
+      transform: translateY(-1px);
+    }
+
+    /* Right Column Cards */
+    .info-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .info-card.counsel-tips {
+      background: #F5EEE2;
+      font-style: italic;
+      color: var(--text-secondary);
+      font-size: 13.5px;
+      line-height: 1.55;
+    }
+
+    .category-tag {
+      display: inline-block;
+      background: var(--text-main);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      margin-bottom: 8px;
+      font-style: normal;
+      border-radius: 3px;
+    }
+
+    .info-card.system-status {
+      font-size: 12px;
+      color: var(--text-secondary);
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--war-room);
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(42, 38, 32, 0.4);
+      backdrop-filter: blur(2px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      max-width: 500px;
+      width: 90%;
+      padding: 28px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 20px 25px -5px rgba(42, 38, 32, 0.12);
+    }
+
+    .modal-card h2 {
+      font-family: Georgia, serif;
+      font-size: 22px;
+      color: var(--text-main);
+      margin-bottom: 12px;
+    }
+
+    .modal-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-bottom: 20px;
+    }
+
+    .btn-close-modal {
+      background: var(--text-main);
+      color: #FFFFFF;
+      border: none;
+      padding: 9px 20px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      float: right;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside>
+    <div>
+      <div class="brand">
+        <img class="brand-icon" src="logo.svg" alt="PA Ji logo">
+        <span>PA Ji</span>
+      </div>
+      <ul class="nav-list">
+        <li><a href="index.html" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V10Z"/><path d="M9 21v-6h6v6"/></svg>
+          <span>Home</span>
+        </a></li>
+        <li><a href="#" class="nav-item active">
+          <img src="war-room.svg" class="nav-icon" alt="War Room Icon">
+          <span>War Room</span>
+        </a></li>
+        <li><a href="#" class="nav-item">
+          <img src="legal-news.svg" class="nav-icon" alt="Legal News Icon">
+          <span>Legal News</span>
+        </a></li>
+        <li><a href="#" class="nav-item">
+          <img src="study-buddy.svg" class="nav-icon" alt="Study Buddy Icon">
+          <span>Study Buddy</span>
+        </a></li>
+        <li><a href="#" class="nav-item">
+          <img src="Internship.svg" class="nav-icon" alt="Internship Icon">
+          <span>Internship Aggregator</span>
+        </a></li>
+      </ul>
+    </div>
+
+    <!-- Sidebar Footer -->
+    <div class="sidebar-footer">
+      <div class="user-profile">
+        <div class="avatar-circle">AS</div>
+        <div class="user-info">
+          <span class="user-name">Alex Sterling</span>
+          <span class="user-role">Senior Associate</span>
+        </div>
+      </div>
+      <a href="#" class="nav-header-btn">
+        <span>⏻</span>
+        <span>Log out</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content Workspace -->
+  <main>
+    <!-- Question mark info button on top right -->
+    <div class="top-right-anchor">
+      <button class="info-btn" id="open-info" title="War Room Information">?</button>
+    </div>
+
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+      <span class="badge">YOUR PERSONAL BATTLEFIELD</span>
+      <h1>War Room</h1>
+      <p>Pressure-test your legal theories. PA Ji simulates opposing counsel to identify evidentiary gaps, procedural vulnerabilities, and logical fallacies in your case brief.</p>
+    </section>
+
+    <!-- Workspace Grid -->
+    <div class="grid-workspace">
+      <!-- Left Column: Inputs -->
+      <div>
+        <div class="tab-container">
+          <button class="tab-button active" id="tab-sim">Simulate Opposition</button>
+          <button class="tab-button" id="tab-spar">Spar Mode / Score My Argument</button>
+        </div>
+
+        <form id="warroom-form" onsubmit="event.preventDefault();">
+          <div class="form-field-label">Case Summary <span class="required-asterisk">*</span></div>
+          <div class="form-field-hint">Provide the essential facts, parties involved, and the core dispute at hand.</div>
+          <div class="radio-option-group">
+            <label><input type="radio" name="case_src" value="manual" checked onclick="toggleInput('case', 'manual')"> Manual Entry</label>
+            <label><input type="radio" name="case_src" value="upload" onclick="toggleInput('case', 'upload')"> Upload Document</label>
+          </div>
+          <div id="case-manual">
+            <textarea id="case-text" class="dark-input" rows="7" placeholder="Briefly describe the matter: facts, parties, what's in dispute..."></textarea>
+          </div>
+          <div id="case-upload" style="display: none;">
+            <div class="file-dropzone">📁 Drag and drop PDF, DOCX, or TXT here, or click to browse</div>
+          </div>
+
+          <div class="form-field-label">Argument to Pressure-Test <span class="required-asterisk">*</span></div>
+          <div class="form-field-hint">State the specific legal theory or contention you intend to present in court.</div>
+          <div class="radio-option-group">
+            <label><input type="radio" name="arg_src" value="direct" checked onclick="toggleInput('arg', 'direct')"> Direct Argument</label>
+            <label><input type="radio" name="arg_src" value="extract" onclick="toggleInput('arg', 'extract')"> Extract from File</label>
+          </div>
+          <div id="arg-direct">
+            <textarea id="arg-text" class="dark-input" rows="5" placeholder="e.g., What if opposition argues the contract was signed under coercion?"></textarea>
+          </div>
+          <div id="arg-extract" style="display: none;">
+            <div class="file-dropzone">📁 Drag and drop file to extract legal argument</div>
+          </div>
+
+          <div class="form-field-label">Rebuttal Tone & Strategy</div>
+          <div class="form-field-hint">Choose how hard the opposition should push back.</div>
+          <select id="tone" class="select-dropdown">
+            <option>Balanced</option>
+            <option>Aggressive</option>
+            <option>Concessive</option>
+          </select>
+
+          <div class="form-disclaimer">
+            PA Ji provides AI-assisted analysis for research only. It is not legal advice, and every citation should be verified before you rely on it.
+          </div>
+
+          <button class="btn-primary" id="submit-btn" type="button">Simulate Opposition</button>
+        </form>
+      </div>
+
+      <!-- Right Column: Tips & System Status -->
+      <div>
+        <div class="info-card counsel-tips">
+          <span class="category-tag">COUNSEL TIPS</span><br>
+          "When drafting the argument section, try framing your theory through a <b>Constitutional lens</b> even in civil matters. It often surfaces procedural gaps the opposition might overlook."
+        </div>
+
+        <div class="info-card system-status">
+          <span class="status-dot"></span>
+          <div>
+            <b>Analysis system</b><br>
+            Ready. Every citation is checked against retrieved case law.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Info Modal Popup -->
+  <div class="modal-overlay" id="info-modal">
+    <div class="modal-card">
+      <h2>About War Room</h2>
+      <p>The War Room module serves as your adversarial testing environment. By analyzing your case briefs and proposed legal contentions, PA Ji models counterarguments, flags risky legal assumptions, and evaluates statutory precedents before you step into the courtroom.</p>
+      <button class="btn-close-modal" id="close-info">Got it</button>
+    </div>
+  </div>
+
+  <script>
+    function toggleInput(field, mode) {
+      if (field === 'case') {
+        document.getElementById('case-manual').style.display = mode === 'manual' ? 'block' : 'none';
+        document.getElementById('case-upload').style.display = mode === 'upload' ? 'block' : 'none';
+      } else if (field === 'arg') {
+        document.getElementById('arg-direct').style.display = mode === 'direct' ? 'block' : 'none';
+        document.getElementById('arg-extract').style.display = mode === 'extract' ? 'block' : 'none';
+      }
+    }
+
+    const modal = document.getElementById('info-modal');
+    document.getElementById('open-info').onclick = () => modal.classList.add('open');
+    document.getElementById('close-info').onclick = () => modal.classList.remove('open');
+    modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('open'); };
+  </script>
+</body>
+</html>

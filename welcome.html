@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome · PA ji</title>
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <script src="welcome.js" defer></script>
+  <style>
+    :root {
+      --bg-color: #FAF6EE;
+      --card-bg: #FDFBF6;
+      --text-main: #2A2620;
+      --text-secondary: #7A7265;
+      --text-muted: #9A9182;
+      --border-color: #F0E9D8;
+      --war-room: #C8A84B;
+      --document-analysis: #1E4FA1;
+      --study-companion: #6E2A34;
+      --internship-opportunities: #3E5C3A;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: default;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible {
+      outline: 2px solid var(--war-room);
+      outline-offset: 3px;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    /* Top Navigation Bar */
+    .topbar {
+      width: 100%;
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 24px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text-main);
+    }
+
+    .brand-icon {
+      width: 64px;
+      height: 64px;
+      display: block;
+      object-fit: contain;
+    }
+
+    .nav-header-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background-color: var(--card-bg);
+      color: var(--text-main);
+      font-size: 13px;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: all 0.25s ease;
+    }
+
+    .nav-header-btn:hover {
+      background-color: var(--border-color);
+      border-color: var(--text-muted);
+      transform: translateY(-1px);
+    }
+
+    .nav-header-btn img {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+    }
+
+    /* Main Split Layout */
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 1360px;
+      margin: 16px auto 48px;
+      padding: 0 48px;
+      display: grid;
+      grid-template-columns: 1.25fr 0.95fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    /* Left Column: Story & 4 Suites */
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .eyebrow span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--war-room);
+    }
+
+    h1 {
+      font-family: Georgia, serif;
+      font-size: clamp(34px, 3.6vw, 48px);
+      line-height: 1.15;
+      font-weight: 400;
+      color: var(--text-main);
+      margin: 18px 0 16px;
+    }
+
+    h1 em {
+      color: #947B3D;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .intro {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 520px;
+      margin-bottom: 28px;
+    }
+
+    /* 4-Module Grid */
+    .suite-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .suites-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      max-width: 560px;
+    }
+
+    .suite-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .suite-item:hover {
+      border-color: var(--war-room);
+      transform: translateY(-1px);
+    }
+
+    .suite-icon {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 6px;
+    }
+
+    .suite-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .suite-info h2 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .suite-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Right Column: Sign-In Card */
+    .access {
+      max-width: 430px;
+      width: 100%;
+      justify-self: end;
+    }
+
+    .signin-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 32px 28px 24px;
+      box-shadow: 0 12px 32px rgba(42, 38, 32, 0.04);
+    }
+
+    .step-label {
+      color: var(--war-room);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .signin-card h2 {
+      font-family: Georgia, serif;
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--text-main);
+      margin-bottom: 10px;
+    }
+
+    .card-description {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .google-wrap {
+      min-height: 44px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .google-placeholder {
+      width: 100%;
+      padding: 11px 18px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: #FFFFFF;
+      color: var(--text-main);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 26px 0 20px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      height: 1px;
+      background: var(--border-color);
+      flex: 1;
+    }
+
+    .steps {
+      list-style: none;
+    }
+
+    .steps li {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .steps li > span {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--border-color);
+      background: var(--bg-color);
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .steps strong {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .steps p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 3px;
+      line-height: 1.45;
+    }
+
+    /* OTP Verification Panel */
+    .back {
+      border: 0;
+      background: none;
+      color: var(--text-secondary);
+      padding: 0;
+      margin-bottom: 20px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .back:hover {
+      color: var(--text-main);
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    input[type="text"] {
+      width: 100%;
+      border: 1px solid var(--border-color);
+      background: var(--bg-color);
+      border-radius: 6px;
+      font-size: 24px;
+      letter-spacing: 10px;
+      text-align: center;
+      padding: 14px 8px;
+      color: var(--text-main);
+    }
+
+    .primary {
+      width: 100%;
+      background: var(--text-main);
+      color: var(--bg-color);
+      border: 0;
+      border-radius: 6px;
+      padding: 13px 18px;
+      margin-top: 16px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background-color 0.2s ease;
+    }
+
+    .primary:hover {
+      background: #3F3930;
+    }
+
+    .primary span {
+      float: right;
+    }
+
+    .note {
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    .resend {
+      display: block;
+      margin: 14px auto 0;
+      border: 0;
+      background: none;
+      color: var(--war-room);
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+
+    .message {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #9C3F30;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .message:empty {
+      display: none;
+    }
+
+    .privacy {
+      display: flex;
+      gap: 10px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 16px;
+      margin-top: 20px;
+    }
+
+    .privacy svg {
+      width: 14px;
+      height: 16px;
+      flex-shrink: 0;
+      stroke: var(--text-muted);
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    .privacy p {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .access-caption {
+      text-align: center;
+      font-family: Georgia, serif;
+      color: var(--text-muted);
+      font-style: italic;
+      font-size: 13px;
+      margin-top: 18px;
+    }
+
+    /* Footer */
+    footer {
+      width: 100%;
+      max-width: 1360px;
+      border-top: 1px solid var(--border-color);
+      margin: 0 auto;
+      padding: 20px 48px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 960px) {
+      .topbar,
+      main,
+      footer {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      main {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .access {
+        max-width: 480px;
+        justify-self: start;
+      }
+    }
+
+    @media (max-width: 580px) {
+      .suites-grid {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="topbar">
+    <a class="brand" href="index.html">
+      <img class="brand-icon" src="logo.svg" alt="PA ji logo">
+      <span>PA ji</span>
+    </a>
+    <a class="nav-header-btn" href="mailto:support@paji.ai">
+      <img src="feedback.svg" alt="Feedback icon">
+      <span>Contact Us / Feedback</span>
+    </a>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Left Column: Intro & All 4 Legal Suites -->
+    <section class="story">
+      <div class="eyebrow"><span></span> A SHARPER WAY TO PREPARE</div>
+      <h1>Your next argument<br>starts with<br><em>a clearer perspective.</em></h1>
+      <p class="intro">Meet PA ji. A unified legal workspace for testing arguments, tracking landmark judgments, mastering case law, and discovering opportunities.</p>
+
+      <span class="suite-label">Inside Your Command Center</span>
+      <div class="suites-grid">
+        <!-- 1. War Room -->
+        <div class="suite-item">
+          <div class="suite-icon">
+            <img src="war-room.svg" alt="War Room">
+          </div>
+          <div class="suite-info">
+            <h2>War Room</h2>
+            <p>Simulate opposing counsel to pressure-test arguments.</p>
+          </div>
+        </div>
+
+        <!-- 2. Legal News -->
+        <div class="suite-item">
+          <div class="suite-icon">
+            <img src="legal-news.svg" alt="Legal News">
+          </div>
+          <div class="suite-info">
+            <h2>Legal News</h2>
+            <p>Track landmark judgments and key case law updates.</p>
+          </div>
+        </div>
+
+        <!-- 3. Study Buddy -->
+        <div class="suite-item">
+          <div class="suite-icon">
+            <img src="study-buddy.svg" alt="Study Buddy">
+          </div>
+          <div class="suite-info">
+            <h2>Study Buddy</h2>
+            <p>Turn complex briefs into summaries and flashcards.</p>
+          </div>
+        </div>
+
+        <!-- 4. Internship Aggregator -->
+        <div class="suite-item">
+          <div class="suite-icon">
+            <img src="Internship.svg" alt="Internship Aggregator">
+          </div>
+          <div class="suite-info">
+            <h2>Internship Aggregator</h2>
+            <p>Discover legal internships, clerkships, and research roles.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Column: Sign-In Card -->
+    <section class="access" aria-label="Sign in">
+      <div class="signin-card">
+        <div class="step-label" id="step-label">01 — AUTHENTICATION</div>
+        
+        <div id="login-panel">
+          <h2>Welcome to PA ji.</h2>
+          <p class="card-description">Sign in with your Gmail account, then verify the OTP sent to your inbox to access your workspace.</p>
+          <div class="google-wrap">
+            <div id="google-button">
+              <button class="google-placeholder" type="button" disabled>Continue with Gmail</button>
+            </div>
+          </div>
+          <div class="divider"><span>TWO-STEP AUTHENTICATION</span></div>
+          <ol class="steps">
+            <li>
+              <span>1</span>
+              <div>
+                <strong>Log in with Gmail</strong>
+                <p>Select your Gmail account to initiate sign-in.</p>
+              </div>
+            </li>
+            <li>
+              <span>2</span>
+              <div>
+                <strong>Enter the email OTP</strong>
+                <p>Type in the 6-digit verification code sent to that Gmail inbox to log into your account.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <div id="otp-panel" hidden>
+          <button class="back" id="back" type="button">← Use a different Gmail account</button>
+          <h2>Enter your OTP.</h2>
+          <p class="card-description">We sent a six-digit verification code to <strong id="email"></strong>. Type it below to log into your account.</p>
+          <form id="otp-form">
+            <label for="code">Verification OTP</label>
+            <input id="code" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" placeholder="000000" required>
+            <button class="primary" id="verify" type="submit">Verify OTP &amp; log in <span aria-hidden="true">→</span></button>
+          </form>
+          <p class="note" id="expiry">Your OTP expires in 5 minutes.</p>
+          <button class="resend" id="resend" type="button">Resend OTP</button>
+        </div>
+
+        <p id="message" class="message" role="status" aria-live="polite"></p>
+
+        <div class="privacy">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 10V7a6 6 0 0 1 12 0v3M5 10h14v11H5z"/></svg>
+          <p>We use your Google name and Gmail address to authenticate your account. We never ask for your Google password.</p>
+        </div>
+      </div>
+      <p class="access-caption">A thoughtful start to your legal work.</p>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <span>© <span id="year">2026</span> PA ji</span>
+    <span>Built for preparation. Powered by perspective.</span>
+    <span>AI supports your work. Your judgment leads.</span>
+  </footer>
+
+</body>
+</html>
